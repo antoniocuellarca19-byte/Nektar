@@ -15,49 +15,51 @@ const Login = () => {
                 username: username,
                 password: password
             });
-
-            const { rol, usuario } = response.data;
-            
-            // Guardamos el usuario en el navegador para usarlo luego
+            const { rol } = response.data;
             localStorage.setItem('user', JSON.stringify({ username, rol }));
-
-            // Redirigir según el rol
-            if (rol === 'ADMIN') {
-                navigate('/admin');
-            } else if (rol === 'CAJERO') {
-                navigate('/cajero');
-            }
+            if (rol === 'ADMIN') navigate('/admin');
+            else if (rol === 'CAJERO') navigate('/cajero');
         } catch (err) {
-            setError('Credenciales incorrectas. Intenta de nuevo.');
+            setError('Credenciales incorrectas');
         }
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-            <div className="card p-4 shadow" style={{ width: '350px' }}>
-                <h3 className="text-center mb-3">☕ Nektar Login</h3>
-                {error && <div className="alert alert-danger">{error}</div>}
+        // Usamos w-100 y h-100 para ocupar toda la pantalla real
+        <div className="d-flex justify-content-center align-items-center w-100 h-100 bg-light position-fixed top-0 start-0">
+            <div className="card shadow-lg border-0 rounded-4 p-4" style={{ width: '400px', maxWidth: '90%' }}>
+                <div className="text-center mb-4">
+                    <h1 className="display-1">☕</h1>
+                    <h3 className="fw-bold text-dark">Nektar Sistema</h3>
+                </div>
+
+                {error && <div className="alert alert-danger text-center py-2">{error}</div>}
+
                 <form onSubmit={handleLogin}>
-                    <div className="mb-3">
-                        <label className="form-label">Usuario</label>
+                    <div className="form-floating mb-3">
                         <input 
                             type="text" 
-                            className="form-control"
+                            className="form-control" 
+                            id="floatingInput" 
+                            placeholder="Usuario"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             autoFocus
                         />
+                        <label htmlFor="floatingInput">Usuario</label>
                     </div>
-                    <div className="mb-3">
-                        <label className="form-label">Contraseña</label>
+                    <div className="form-floating mb-4">
                         <input 
                             type="password" 
-                            className="form-control"
+                            className="form-control" 
+                            id="floatingPassword" 
+                            placeholder="Contraseña"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                        <label htmlFor="floatingPassword">Contraseña</label>
                     </div>
-                    <button type="submit" className="btn btn-primary w-100">Ingresar</button>
+                    <button type="submit" className="btn btn-primary w-100 py-2 fw-bold rounded-pill">INGRESAR</button>
                 </form>
             </div>
         </div>
