@@ -47,20 +47,20 @@ const AdminDashboard = () => {
     const VistaResumen = () => (
         <div className="row g-4 justify-content-center">
             <div className="col-md-4">
-                <div className="card text-white bg-success h-100 shadow border-0 rounded-4">
+                <div className="card text-white bg-success h-100 shadow-sm border-0">
                     <div className="card-body text-center py-5">
-                        <h5 className="card-title opacity-75">Ventas Hoy</h5>
-                        <h1 className="display-4 fw-bold my-3">${totalVendido}</h1>
-                        <p className="card-text">{ventasHoy.length} pedidos realizados</p>
+                        <h5 className="card-title opacity-75 text-uppercase fw-bold" style={{fontSize: '0.9rem', letterSpacing: '1px'}}>Ventas Hoy</h5>
+                        <h1 className="display-4 fw-bold my-3">${totalVendido.toFixed(2)}</h1>
+                        <p className="card-text fw-light">{ventasHoy.length} pedidos realizados</p>
                     </div>
                 </div>
             </div>
             <div className="col-md-4">
-                <div className="card text-white bg-warning h-100 shadow border-0 rounded-4">
+                <div className="card text-dark bg-warning bg-opacity-25 h-100 shadow-sm border-0">
                     <div className="card-body text-center py-5">
-                        <h5 className="card-title opacity-75 text-dark">Stock Crítico</h5>
+                        <h5 className="card-title opacity-75 text-uppercase fw-bold text-dark" style={{fontSize: '0.9rem', letterSpacing: '1px'}}>Stock Crítico</h5>
                         <h1 className="display-4 fw-bold my-3 text-dark">{insumos.filter(i => i.stockActual < 5).length}</h1>
-                        <p className="card-text text-dark">Insumos por agotarse</p>
+                        <p className="card-text text-dark fw-light">Insumos por agotarse</p>
                     </div>
                 </div>
             </div>
@@ -68,21 +68,21 @@ const AdminDashboard = () => {
     );
 
     const VistaInventario = () => (
-        <div className="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div className="card shadow-sm border-0 overflow-hidden">
             <div className="table-responsive">
                 <table className="table table-hover mb-0 text-center align-middle">
-                    <thead className="table-dark">
+                    <thead className="bg-light text-secondary">
                         <tr>
-                            <th>Nombre</th>
-                            <th>Stock</th>
-                            <th>Unidad</th>
-                            <th>Proveedor</th>
+                            <th className="py-3 border-0">Nombre</th>
+                            <th className="py-3 border-0">Stock</th>
+                            <th className="py-3 border-0">Unidad</th>
+                            <th className="py-3 border-0">Proveedor</th>
                         </tr>
                     </thead>
                     <tbody>
                         {insumos.map(ins => (
                             <tr key={ins.id}>
-                                <td className="text-start ps-4 fw-bold">{ins.nombre}</td>
+                                <td className="text-start ps-4 fw-bold text-dark">{ins.nombre}</td>
                                 <td className={ins.stockActual < 5 ? "text-danger fw-bold bg-danger-subtle" : "text-success fw-bold"}>
                                     {ins.stockActual.toFixed(2)}
                                 </td>
@@ -97,38 +97,35 @@ const AdminDashboard = () => {
     );
 
     const VistaVentas = () => (
-        <div className="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div className="card shadow-sm border-0 overflow-hidden">
             <div className="table-responsive">
-                <table className="table table-striped mb-0 align-middle">
-                    <thead className="table-dark">
+                <table className="table table-hover mb-0 align-middle">
+                    <thead className="bg-light text-secondary">
                         <tr>
-                            <th>#ID</th>
-                            <th>Hora</th>
-                            <th>Productos Vendidos</th> {/* NUEVA COLUMNA */}
-                            <th>Mesa</th>
-                            <th>Método</th>
-                            <th className="text-end pe-4">Total</th>
+                            <th className="py-3 border-0 ps-4">#ID</th>
+                            <th className="py-3 border-0">Hora</th>
+                            <th className="py-3 border-0">Detalle</th>
+                            <th className="py-3 border-0">Mesa</th>
+                            <th className="py-3 border-0">Método</th>
+                            <th className="py-3 border-0 text-end pe-4">Total</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {ventasHoy.length === 0 ? <tr><td colSpan="6" className="text-center py-4">Sin ventas hoy</td></tr> : 
+                        {ventasHoy.length === 0 ? <tr><td colSpan="6" className="text-center py-5 text-muted">Sin ventas registradas hoy</td></tr> : 
                         ventasHoy.map(p => (
                             <tr key={p.id}>
-                                <td>{p.id}</td>
+                                <td className="ps-4 fw-bold text-muted">#{p.id}</td>
                                 <td>{new Date(p.fecha).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
-                                
-                                {/* AQUI MOSTRAMOS LOS PRODUCTOS */}
                                 <td className="text-start">
-                                    <small>
+                                    <small className="text-muted">
                                         {p.detalles.map(d => (
                                             <div key={d.id}>• {d.cantidad}x {d.producto.nombre}</div>
                                         ))}
                                     </small>
                                 </td>
-
-                                <td>{p.mesa ? `Mesa ${p.mesa.numero}` : 'Barra'}</td>
-                                <td><span className="badge bg-secondary rounded-pill">{p.metodoPago}</span></td>
-                                <td className="text-end pe-4 fw-bold text-success">${p.total}</td>
+                                <td>{p.mesa ? <span className="badge bg-primary rounded-pill">Mesa {p.mesa.numero}</span> : <span className="badge bg-secondary rounded-pill">Barra</span>}</td>
+                                <td><span className="badge bg-light text-dark border">{p.metodoPago}</span></td>
+                                <td className="text-end pe-4 fw-bold text-success">${p.total.toFixed(2)}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -138,20 +135,31 @@ const AdminDashboard = () => {
     );
 
     return (
-        <div className="min-vh-100" style={{backgroundColor: '#f0f2f5'}}>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4 shadow sticky-top">
+        <div className="min-vh-100" style={{backgroundColor: 'var(--nektar-bg)'}}>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-nektar-dark px-4 shadow-sm sticky-top">
                 <div className="container">
-                    <span className="navbar-brand fw-bold">👨‍💼 Admin Dashboard</span>
+                    <span className="navbar-brand fw-bold d-flex align-items-center gap-2">
+                        <span style={{fontSize: '1.5rem'}}>☕</span> Nektar Admin
+                    </span>
                     <div className="d-flex gap-2">
                         {['resumen', 'inventario', 'ventas'].map(v => (
-                            <button key={v} className={`btn btn-sm text-capitalize ${vistaActual===v?'btn-light':'btn-outline-light'}`} onClick={()=>setVistaActual(v)}>{v}</button>
+                            <button 
+                                key={v} 
+                                className={`btn btn-sm text-capitalize px-3 rounded-pill fw-medium ${vistaActual===v ? 'btn-light text-dark' : 'btn-outline-light border-0'}`} 
+                                onClick={()=>setVistaActual(v)}
+                            >
+                                {v}
+                            </button>
                         ))}
-                        <button className="btn btn-sm btn-danger ms-3" onClick={logout}>Salir</button>
+                        <button className="btn btn-sm btn-danger ms-3 px-3 rounded-pill" onClick={logout}>Salir</button>
                     </div>
                 </div>
             </nav>
             <div className="container py-5">
-                <h3 className="text-center fw-bold mb-4 text-uppercase text-secondary">{vistaActual}</h3>
+                <div className="d-flex align-items-center justify-content-between mb-4">
+                    <h3 className="fw-bold text-dark text-capitalize m-0">{vistaActual}</h3>
+                    <span className="text-muted small">{new Date().toLocaleDateString()}</span>
+                </div>
                 {vistaActual === 'resumen' && <VistaResumen />}
                 {vistaActual === 'inventario' && <VistaInventario />}
                 {vistaActual === 'ventas' && <VistaVentas />}
@@ -159,4 +167,5 @@ const AdminDashboard = () => {
         </div>
     );
 };
+
 export default AdminDashboard;

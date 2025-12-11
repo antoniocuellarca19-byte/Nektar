@@ -1,30 +1,74 @@
-/* Reset Básico */
-html, body, #root {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  background-color: #f0f2f5; /* Fondo gris muy suave y moderno */
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Paleta "Soft Latte" - Más suave y estética */
+  --nektar-dark: #4E342E;       /* Café oscuro suave para textos */
+  --nektar-primary: #8D6E63;    /* Marrón "café con leche" para botones */
+  --nektar-primary-hover: #6D4C41; 
+  --nektar-light: #D7CCC8;      /* Detalles sutiles */
+  --nektar-bg: #FDFBF7;         /* Fondo blanco cálido (Cremoso) */
+  --nektar-success: #81C784;    /* Verde pastel para éxitos */
+  --shadow-soft: 0 8px 24px rgba(149, 157, 165, 0.1); /* Sombra muy suave */
 }
 
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--nektar-bg);
+  color: #424242; /* Gris oscuro suave para leer mejor */
   -webkit-font-smoothing: antialiased;
 }
 
-/* Scrollbar más bonita */
+/* Botones personalizados más estéticos */
+.btn-primary {
+  background-color: var(--nektar-primary);
+  border-color: var(--nektar-primary);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+  background-color: var(--nektar-primary-hover) !important;
+  border-color: var(--nektar-primary-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(141, 110, 99, 0.4);
+}
+
+.btn-success {
+  background-color: var(--nektar-success);
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #66BB6A;
+  transform: translateY(-2px);
+}
+
+/* Tarjetas modernas y limpias */
+.card {
+  border: none;
+  border-radius: 24px; /* Bordes más redondos */
+  background-color: white;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Scrollbar estética */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1; 
-  border-radius: 4px;
+  background: #E0E0E0;
+  border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8; 
+  background: #BDBDBD;
 }
+
+/* Utilidades extra */
+.text-nektar { color: var(--nektar-primary); }
+.bg-nektar-dark { background-color: var(--nektar-dark) !important; }
