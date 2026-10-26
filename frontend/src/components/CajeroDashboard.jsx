@@ -4,17 +4,14 @@ import { useNavigate } from 'react-router-dom';
 
 const API_URL = 'http://localhost:8080/api';
 
-// --- LÓGICA DE IMÁGENES MEJORADA ---
 const obtenerImagen = (producto) => {
     const nombre = producto.nombre ? producto.nombre.toLowerCase() : "";
     const categoria = producto.categoria || "";
 
-    // 1. IMÁGENES ESPECÍFICAS
     if (nombre.includes("matcha")) return 'https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?w=500&q=80';
     if (nombre.includes("jamón") && nombre.includes("queso")) return 'https://images.unsplash.com/photo-1623334044303-241021148842?w=500&q=80';
     if ((nombre.includes("nutella") || nombre.includes("dulce")) && nombre.includes("croissant")) return 'https://images.unsplash.com/photo-1555507036-ab1f40388085?w=500&q=80';
 
-    // 2. IMÁGENES POR CATEGORÍA
     const mapCategorias = {
         'Lattes Fríos': 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&q=80',
         'Cafés Calientes': 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=500&q=80',
@@ -32,7 +29,6 @@ const obtenerImagen = (producto) => {
 
     if (mapCategorias[categoria]) return mapCategorias[categoria];
 
-    // 3. FALLBACK GENERAL
     return 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&q=80'; 
 };
 
@@ -172,7 +168,6 @@ const CajeroDashboard = () => {
     )
   }
 
-  // --- VISTA 2: ORDEN (PANTALLA COMPLETA) ---
   return (
     <div className="d-flex flex-column vh-100 w-100 bg-light">
       <div className="bg-white shadow-sm py-2 px-3 d-flex align-items-center justify-content-between z-2 border-bottom">
